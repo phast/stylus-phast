@@ -1,0 +1,22 @@
+{
+  "name": "stylus-phast",
+  "description": "Stylus mixins and utilities",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/phast/stylus-phast.git"
+  },
+  "dependencies": {
+    "stylus": "~0.49",
+    "nib": "~1.0"
+  },
+  "author": {
+    "name": "Phast",
+    "email": "phast.cms@gmail.com"
+  },
+  "main": "lib/phast.js",
+  "engines": {
+    "node": "*"
+  }
+}
