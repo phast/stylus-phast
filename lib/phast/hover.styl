@@ -1,0 +1,17 @@
+/**
+ * Сокращяет написание классов для состояния наведения
+ * @param {string} parent - Родительский селектор на который производится наведение
+ * @todo - добавить автоматическое опеределение псевдоселекторов
+ */
+hover(parent = null, $sel = selector()) {
+   if (parent == null) {
+      +suff(':hover' '.is-hover', '', $sel){
+         {block}
+      }
+   }
+   else {
+      +pref(_suff(':hover' '.is-hover', '', parent), ' ', $sel){
+         {block}
+      }
+   }
+}
