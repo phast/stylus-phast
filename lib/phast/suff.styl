@@ -1,0 +1,33 @@
+/**
+ * @todo добавить примеры использования
+ */
+
+/**
+ * Функция добавляет модификаторы ПОСЛЕ селектора и возвращаяет модифицированный массив
+ * @param {array} $prefs - Входной массив модификаторов
+ * @param {string} $spacer - Разделитель между модификатором и селектором
+ * @param {{array|string}} $parent - Селекторы к которым применяет модификатор
+ * @return {array} - Массив модифицированных селекторов
+ */
+_suff($suffs, $spacer = ' ', $parent = selector()) {
+   $sel = ()
+   $parent = split(',', $parent)
+   for ($suff, index in $suffs) {
+      for ($_parent, index in $parent) {
+         push($sel, $_parent + $spacer + $suff)
+      }
+   }
+   return $sel
+}
+
+/**
+ * Миксин добавляет модификаторы ПОСЛЕ селектора и позволяет применять стили к модифицированным селекторам
+ * @param {array} $prefs - Входной массив модификаторов
+ * @param {string} $spacer - Разделитель между модификатором и селектором
+ * @param {{array|string}} $parent - Селекторы к которым применяет модификатор
+ */
+suff($suffs, $spacer = ' ', $parent = selector()) {
+   /{join(', ', _suff($suffs, $spacer, $parent))} {
+      {block}
+   }
+}
