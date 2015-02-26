@@ -1,0 +1,60 @@
+/**
+ * Сокращяет написание классов для состояния наведения.
+ * Позволяет обращаться к родителю использую родительский селектор:
+ *
+      .filter {
+         &-dropdown {
+            +hover-up() {
+               &-title {
+                  color #000
+               }
+            }
+         }
+      }
+ *
+ * Результатом будет:
+ *
+      .filter-dropdown:hover .filter-dropdown-title,
+      .filter-dropdown.is-hover .filter-dropdown-title {
+         color: #000;
+      }
+ *
+ * Важно: нельзя использовать данную функцию для задания стилей родителю:
+ *
+      .filter {
+         &-dropdown {
+            +hover-up() {
+               display block
+               &-title {
+                  color #000
+               }
+            }
+         }
+      }
+ *
+ * Результатом будет:
+ *
+      .filter-dropdown:hover .filter-dropdown,
+      .filter-dropdown.is-hover .filter-dropdown {
+         display: block;
+      }
+      .filter-dropdown:hover .filter-dropdown-title,
+      .filter-dropdown.is-hover .filter-dropdown-title {
+         color: #000;
+      }
+ *
+ * @param {string} parent - Родительский селектор на который производится наведение
+ * @todo - добавить автоматическое опеределение псевдоселекторов
+ */
+hover-up(parent = null) {
+   if (parent == null) {
+      +pref(_suff(':hover' '.is-hover', ''), ' '){
+         {block}
+      }
+   }
+   else {
+      +pref(_suff(':hover' '.is-hover', '', parent), ' '){
+         {block}
+      }
+   }
+}
