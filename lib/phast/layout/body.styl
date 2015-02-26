@@ -1,10 +1,5 @@
 body {
    overflow-y scroll
-
-   > footer{
-      height $footer-height
-      margin-top - $footer-height
-   }
 }
 
 .body-wrapper{
@@ -22,5 +17,10 @@ body {
 
    > footer{
       height $footer-height
+   }
+
+   & + footer{
+      height $footer-height
+      margin-top - $footer-height
    }
 }
