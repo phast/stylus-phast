@@ -1,0 +1,23 @@
+block() {
+   padding-left $block-padding
+   padding-right $block-padding
+}
+block-wrapper() {
+   margin-left auto
+   margin-right auto
+
+   if $block-max-width {
+      min-width $block-width
+      max-width $block-max-width
+   }
+   else {
+      width $block-width
+   }
+}
+
+[block]{
+   block()
+}
+[block-wrapper]{
+   block-wrapper()
+}
