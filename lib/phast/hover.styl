@@ -3,14 +3,16 @@
  * @param {string} parent - Родительский селектор на который производится наведение
  * @todo - добавить автоматическое опеределение псевдоселекторов
  */
-hover(parent = null, $sel = selector()) {
+hover(parent = null) {
    if (parent == null) {
-      +suff(':hover' '.is-hover', '', $sel){
+      &:hover,
+      &.is-hover {
          {block}
       }
    }
    else {
-      +pref(_suff(':hover' '.is-hover', '', parent), ' ', $sel){
+      {parent}:hover &,
+      {parent}.is-hover & {
          {block}
       }
    }
