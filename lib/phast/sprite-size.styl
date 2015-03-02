@@ -2,7 +2,7 @@
  * Размеры изображения в спрайте
  * @param {{string|ident}} name - Имя файла иконки без разрешения в виде строки, либо переменная вида "$sprite-icon-name"
  */
-sprite-size(name)
+sprite-size(name) {
    if (typof(name) == string) {
       sprite = '$sprite-'name
    } else {
@@ -10,3 +10,4 @@ sprite-size(name)
    }
    width sprite[2]
    height sprite[3]
+}
