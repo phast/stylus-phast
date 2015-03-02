@@ -1,0 +1,11 @@
+/**
+ * Положение изображения в спрайте
+ * @param {{string|ident}} name - Имя файла иконки без разрешения в виде строки, либо переменная вида "$sprite-icon-name"
+ */
+sprite-pos(name)
+   if (typof(name) == string) {
+      sprite = '$sprite-'name
+   } else {
+      sprite = name
+   }
+   background-position sprite[0] sprite[1]
