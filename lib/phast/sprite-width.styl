@@ -1,0 +1,12 @@
+/**
+ * Ширина изображения в спрайте
+ * @param {{string|ident}} name - Имя файла иконки без разрешения в виде строки, либо переменная вида "$sprite-icon-name"
+ * @return {px} - Возвращяет пиксельное значение ширины
+ */
+sprite-width(name)
+   if (typof(name) == string) {
+      sprite = '$sprite-'name
+   } else {
+      sprite = name
+   }
+   return sprite[2]
