@@ -1,0 +1,35 @@
+/**
+ * Добавляет изображение из спрайта
+ * @param {{string|ident}} name - Имя файла иконки без разрешения в виде строки, либо переменная вида "$sprite-icon-name"
+ * @param {{string|ident}} horizontal - Тип выравнивания блока по горизонтали
+ * @param {{string|ident}} vertical - Тип выравнивания блока по вертикали
+ */
+sprite(name, horizontal = none, vertical = none) {
+   if (typof(name) == string) {
+      sprite = '$sprite-'name
+   } else {
+      sprite = name
+   }
+
+   width sprite[2]
+   height sprite[3]
+   background url('../images/sprite.png') sprite[0] sprite[1] no-repeat
+
+   if horizontal is center {
+      margin-left round(@width / -2)
+      left 50%
+   } else if (horizontal is left) {
+      left 0
+   } else if (horizontal is right) {
+      right 0
+   }
+
+   if (vertical is center) {
+      margin-top round(@height / -2)
+      top 50%
+   } else if (vertical is top) {
+      top 0
+   } else if (vertical is bottom) {
+      bottom 0
+   }
+}
