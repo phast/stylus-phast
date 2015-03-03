@@ -1,0 +1,19 @@
+/**
+ * Подготовка блока, в котором будут размещены элементы выравненные по всей ширине
+ */
+justify-block() {
+   text-align justify
+   font-size 0
+   line-height 0
+   text-justify distribute-all-lines
+   > * {
+       display inline-block
+       text-align left
+       vertical-align top
+   }
+   &:after {
+      width 100%
+      display inline-block
+      content ''
+   }
+}
