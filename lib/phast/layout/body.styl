@@ -1,25 +1,20 @@
 body {
    overflow-y scroll
 }
-
-.body-wrapper{
+.body-wrapper {
    overflow hidden
    min-width $layout-min-width if $layout-min-width
    min-height 100%
-
-   > main{
+   > main {
       padding-bottom $footer-margin
-
-      &:last-child{
+      &:last-child {
          padding-bottom @padding-bottom + $footer-height
       }
    }
-
-   > footer{
+   > footer {
       height $footer-height
    }
-
-   & + footer{
+   & + footer {
       height $footer-height
       margin-top - $footer-height
    }
