@@ -1,0 +1,28 @@
+/**
+ * Переделывает поведение свойста text-decoration
+ */
+text-decoration() {
+   if (arguments == link) {
+      text-decoration underline
+      +hover() {
+         text-decoration none
+      }
+   } else (if arguments == reverse) {
+      text-decoration none
+      +hover() {
+         text-decoration underline
+      }
+   } else (if arguments == underline) {
+      text-decoration underline
+      +hover() {
+         text-decoration underline
+      }
+   } else (if arguments == none) {
+      text-decoration none
+      +hover() {
+         text-decoration none
+      }
+   } else {
+      text-decoration arguments
+   }
+}
