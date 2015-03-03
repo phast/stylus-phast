@@ -5,7 +5,7 @@ block() {
 block-wrapper() {
    margin-left auto
    margin-right auto
-   if $block-max-width {
+   if ($block-max-width) {
       min-width $block-width
       max-width $block-max-width
    } else {

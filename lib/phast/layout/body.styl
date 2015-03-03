@@ -5,17 +5,32 @@ body {
    overflow hidden
    min-width $layout-min-width if $layout-min-width
    min-height 100%
+   > header {
+      if ($header-height) {
+         height $header-height
+         &.is-fixed {
+            position fixed
+            top 0
+            right 0
+            left 0
+            & + main {
+               margin-top $header-height + ($header-margin if $header-margin)
+            }
+         }
+      }
+   }
    > main {
-      padding-bottom $footer-margin
+      margin-top $header-margin if $header-margin
+      padding-bottom $footer-margin if $footer-margin
       &:last-child {
          padding-bottom @padding-bottom + $footer-height
       }
    }
    > footer {
-      height $footer-height
+      height $footer-height if $footer-height
    }
    & + footer {
       height $footer-height
-      margin-top - $footer-height
+      margin-top -1*$footer-height
    }
 }
