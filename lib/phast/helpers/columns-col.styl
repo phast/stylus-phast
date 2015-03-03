@@ -1,0 +1,46 @@
+/**
+ * @todo - add description
+ * @param {number} $size - Columns count
+ * @param {number} $margin - Margin between columns
+ * @param {number} $sidebar-width - You can choose different width for one column 'sidebar'
+ * @param {number} $width - Parent block width. Needed for precise calculations.
+ * @param {string} $pref - String that contain selector to be add as prefix for columns. Useful in cases when need to change behavior only for one set of columns.
+ */
+columns-col($size, $margin = 0, $sidebar-width = 0, $width = $block-width, $pref = '') {
+   $margin = no-unit($margin)
+   $width = no-unit($width)
+   $attr_size = "'" + 'size:'+$size + "'"
+   $attr_sidebar = "'" + 'sidebar' + "'"
+   $col_size = ($width - $margin * ($size - 1)) / $size
+
+
+   if ($sidebar-width is 'half') {
+      $sidebar-width = ($col_size / 2)
+   } else if ($sidebar-width is 'col') {
+      $sidebar-width = ($width - $margin * ($size)) / ($size + 1)
+   } else {
+      $sidebar-width = no-unit($sidebar-width)
+   }
+
+   if ($size > 1) {
+      {$pref}[columns~={$attr_size}] > [columns-col] {
+         width percent($col_size, $width)
+      }
+      {$pref}[columns~={$attr_size}] > [columns-col] + [columns-col] {
+         margin-left percent($margin, $width)
+      }
+      {$pref}[columns~={$attr_size}] > [columns-col]:nth-child({$size}n+1) {
+         clear both
+         margin-left 0
+      }
+      if ($sidebar-width > 0) {
+         $col_size = ($width - $margin * ($size - 1) - $sidebar-width) / ($size - 1)
+         {$pref}[columns~={$attr_size}][columns~={$attr_sidebar}] > [columns-col] {
+            width percent($col_size, $width)
+         }
+         {$pref}[columns~={$attr_size}][columns~={$attr_sidebar}] > [columns-col~='sidebar'] {
+            width percent($sidebar-width, $width)
+         }
+      }
+   }
+}
