@@ -2,22 +2,22 @@
  * Переделывает поведение свойста text-decoration
  */
 text-decoration() {
-   if (arguments == link) {
+   if (arguments is link) {
       text-decoration underline
       +hover() {
          text-decoration none
       }
-   } else (if arguments == reverse) {
+   } else if (arguments is reverse) {
       text-decoration none
       +hover() {
          text-decoration underline
       }
-   } else (if arguments == underline) {
+   } else if (arguments is underline) {
       text-decoration underline
       +hover() {
          text-decoration underline
       }
-   } else (if arguments == none) {
+   } else if (arguments is none) {
       text-decoration none
       +hover() {
          text-decoration none

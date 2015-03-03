@@ -2,6 +2,11 @@
  * Сокращяет написание классов для состояния наведения.
  * Позволяет обращаться к родителю использую родительский селектор:
  *
+ * @param {string} parent - Родительский селектор на который производится наведение
+ * @todo - добавить автоматическое опеределение псевдоселекторов
+ *
+ * @example - first
+ *
       .filter {
          &-dropdown {
             +hover-up() {
@@ -12,13 +17,14 @@
          }
       }
  *
- * Результатом будет:
+ * @example - first result
  *
       .filter-dropdown:hover .filter-dropdown-title,
       .filter-dropdown.is-hover .filter-dropdown-title {
          color: #000;
       }
  *
+ * @example - second
  * Важно: нельзя использовать данную функцию для задания стилей родителю:
  *
       .filter {
@@ -32,7 +38,7 @@
          }
       }
  *
- * Результатом будет:
+ * @example - second result
  *
       .filter-dropdown:hover .filter-dropdown,
       .filter-dropdown.is-hover .filter-dropdown {
@@ -43,8 +49,6 @@
          color: #000;
       }
  *
- * @param {string} parent - Родительский селектор на который производится наведение
- * @todo - добавить автоматическое опеределение псевдоселекторов
  */
 hover-up(parent = null) {
    if (parent == null) {

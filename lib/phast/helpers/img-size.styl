@@ -3,7 +3,7 @@
  * @param {path} name - Путь до файла изображения внутри папки images
  */
 img-size(path) {
-   size = image-size('../source/'+path)
+   size = image-size($settings-img-path+path)
    width size[0]
    height size[1]
 }
