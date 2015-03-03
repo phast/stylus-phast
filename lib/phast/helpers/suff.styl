@@ -12,8 +12,8 @@
 _suff($suffs, $spacer = ' ', $parent = selector()) {
    $sel = ()
    $parent = split(',', $parent)
-   for ($suff, index in $suffs) {
-      for ($_parent, index in $parent) {
+   for $suff in $suffs {
+      for $_parent in $parent {
          push($sel, $_parent + $spacer + $suff)
       }
    }

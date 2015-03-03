@@ -12,8 +12,8 @@
 _pref($prefs, $spacer = ' ', $parent = selector()) {
    $sel = ()
    $parent = split(',', $parent)
-   for ($pref, index in $prefs) {
-      for ($_parent, index in $parent) {
+   for $pref in $prefs {
+      for $_parent in $parent {
          push($sel, $pref + $spacer + $_parent)
       }
    }
