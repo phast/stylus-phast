@@ -2,7 +2,8 @@
  * Размер изображения
  * @param {path} name - Путь до файла изображения внутри папки images
  */
-img-size(path)
+img-size(path) {
    size = image-size('../source/'+path)
    width size[0]
    height size[1]
+}
