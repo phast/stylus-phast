@@ -17,6 +17,14 @@ clear() {
          display table
          width 100%
       }
+   } else if (arguments is none) {
+      clear none
+      &:before,
+      &:after {
+         display inline
+         width auto
+         content normal
+      }
    } else {
       clear arguments
    }
