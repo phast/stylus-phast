@@ -31,6 +31,7 @@ body {
       height $footer-height if $footer-height
    }
    & + footer {
+      min-width $layout-min-width ? $layout-min-width : ($block-width + $block-padding)
       height $footer-height
       margin-top -1*$footer-height
    }
