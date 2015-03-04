@@ -10,7 +10,6 @@ columns-col($size, $margin = 0, $sidebar-width = 0, $width = no-unit($block-widt
    $attr_size = "'" + 'size:'+$size + "'"
    $attr_sidebar = "'" + 'sidebar' + "'"
    $col_size = ($width - $margin * ($size - 1)) / $size
-
    if ($sidebar-width is 'half') {
       $sidebar-width = ($col_size / 2)
    } else if ($sidebar-width is 'col') {
@@ -20,11 +19,32 @@ columns-col($size, $margin = 0, $sidebar-width = 0, $width = no-unit($block-widt
    }
 
    if ($size > 1) {
+      {$pref}[columns~={$attr_size}] {
+         // If some value is pixel, then we transition columns to flexbox.
+         // This allowed us justify columns if width fixed.
+         // Or set fixed margins with flexible width of blocks.
+         if (unit($width) is 'px') || (unit($margin) is 'px') {
+            display flex
+            flex-direction row
+            justify-content space-between if (unit($width) is 'px')
+            &:before,
+            &:after {
+               display none
+            }
+         }
+         if (unit($width) isnt 'px') && (unit($margin) is 'px') {
+            > [columns-col] {
+               flex 1
+            }
+         }
+      }
       {$pref}[columns~={$attr_size}] > [columns-col] {
          width unit($width) is 'px' ? unit($col_size, 'px') : percent($col_size, $width)
       }
       {$pref}[columns~={$attr_size}] > [columns-col] + [columns-col] {
-         margin-left unit($margin) is 'px' ? unit($margin, 'px') : percent($margin, $width)
+         if (unit($width) isnt 'px') {
+            margin-left unit($margin) is 'px' ? unit($margin, 'px') : percent($margin, $width)
+         }
       }
       {$pref}[columns~={$attr_size}] > [columns-col]:nth-child({$size}n+1) {
          clear both
