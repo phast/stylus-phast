@@ -42,9 +42,7 @@ columns-col($size, $margin = 0, $sidebar-width = 0, $width = no-unit($block-widt
          width unit($width) is 'px' ? unit($col_size, 'px') : percent($col_size, $width)
       }
       {$pref}[columns~={$attr_size}] > [columns-col] + [columns-col] {
-         if (unit($width) isnt 'px') {
-            margin-left unit($margin) is 'px' ? unit($margin, 'px') : percent($margin, $width)
-         }
+         margin-left unit($margin) is 'px' ? unit($margin, 'px') : percent($margin, $width)
       }
       {$pref}[columns~={$attr_size}] > [columns-col]:nth-child({$size}n+1) {
          clear both
