@@ -51,10 +51,10 @@ columns-col($size, $margin = 0, $sidebar-width = 0, $width = no-unit($block-widt
       if ($sidebar-width > 0) {
          $col_size = ($width - $margin * ($size - 1) - $sidebar-width) / ($size - 1)
          {$pref}[columns~={$attr_size}][columns~={$attr_sidebar}] > [columns-col] {
-            width unit($width) is 'px' ? unit($sidebar-width, 'px') : percent($col_size, $width)
+            width unit($width) is 'px' ? unit($col_size, 'px') : percent($col_size, $width)
          }
          {$pref}[columns~={$attr_size}][columns~={$attr_sidebar}] > [columns-col~='sidebar'] {
-            width unit($width) is 'px' ? unit($col_size, 'px') : percent($sidebar-width, $width)
+            width unit($width) is 'px' ? unit($sidebar-width, 'px') : percent($sidebar-width, $width)
          }
       }
    }
