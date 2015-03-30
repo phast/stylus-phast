@@ -15,7 +15,7 @@ body {
             right 0
             left 0
             & + main {
-               margin-top $header-height + $header-margin
+               margin-top $header-margin ? $header-height + $header-margin : $header-height
             }
          }
       }
@@ -24,7 +24,7 @@ body {
       margin-top $header-margin if $header-margin
       padding-bottom $footer-margin if $footer-margin
       &:last-child {
-         padding-bottom @padding-bottom + $footer-height
+         padding-bottom @padding-bottom ? @padding-bottom + $footer-height : $footer-height
       }
    }
    > footer {
@@ -32,7 +32,7 @@ body {
    }
    & + footer {
       min-width $layout-min-width ? $layout-min-width : ($block-width + $block-padding * 2)
-      height $footer-height
-      margin-top -1*$footer-height
+      height $footer-height if $footer-height
+      margin-top -1*$footer-height if $footer-height
    }
 }
