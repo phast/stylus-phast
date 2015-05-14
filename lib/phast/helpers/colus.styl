@@ -1,0 +1,159 @@
+$colus = {}
+colus( $opts = {} ) {
+   // Работа с ошибками
+   $errors = {
+      exists: '\n Колонки с именем `'+ $opts['name'] +'` уже существуют. \n Используйте `extend`, либо выберите другое имя. \n\n',
+      extend: '\n Нету таких колонок `'+ $opts['extend'] +'`, вот ты и бесишься. \n\n'
+   }
+
+   // Начальные значения
+   $defs = {
+      name: selector(), // Имя колонок
+      extend: null, // Имя колонок от которых следуем наследовать настройки
+      size: 1, // Количество столбцов
+      margin: null, // Отступ между столбцами
+      item: '&-item', // Селектор для колонок
+      sidebar: null
+      // sidebar: {
+      //    index: 1,
+      //    width: null
+      // }
+   }
+
+   // Если наследуем колонки, то проверяем их на наличие.
+   if ( ('extend' in $opts) and ($opts['extend'] in $colus) ) {
+      // Есть -- берём их настройки.
+      $defs = $colus[ $opts['extend'] ]
+   } else if ( ('extend' in $opts) and (not $opts['extend'] in $colus) ) {
+      // Нету -- Выдаём ошибку
+      error( $errors['extend'] )
+   }
+
+   // Дополняем начальные значения теми что указаны в вызове
+   $settings = extend( clone($defs), $opts )
+
+   // Проверяем чтобы уже не было таких колонок
+   if ( $opts['name'] in $colus ) {
+      // Есть -- выдаём ошибку
+      error( $errors.exists )
+   } else if ( 'name' in $opts ) {
+      // Нету -- сохраняем
+      $colus[ $settings['name'] ] = $settings
+   }
+
+   // Отсюда начинается работа со стилями
+   colus-parent($settings)
+   colus-child($settings)
+}
+colus-parent( $opts = {} ) {
+   $errors = {
+      unit: '\n Отступ без единиц измерения для `'+ $opts['name'] +'`. \n Могут быть % или px. \n\n'
+   }
+
+   $defs = {
+      margin: null // Отступ между столбцами
+   }
+   $settings = extend( clone($defs), $opts)
+
+   sidebar = $settings['sidebar']
+   sidebar-width = sidebar and unit(sidebar.width) == 'px' ? sidebar.width : 0
+   margin = $settings['margin']
+   size = $settings['size']
+
+   if ( margin ) {
+      if ( unit( margin ) == 'px' ) {
+         padding-right ( margin * (size - 1) + sidebar-width )
+      } else if ( unit( margin ) == '%' ) {
+         if ( @padding-right ) {
+            padding-right sidebar-width
+         }
+      } else {
+         error( $errors['unit'] )
+      }
+   }
+}
+colus-child( $opts = {} ) {
+   $errors = {
+      unit: '\n Отступ без единиц измерения для `'+ $opts['name'] +'`. \n Могут быть % или px. \n\n'
+   }
+
+   $defs = {
+      size: 1, // Количество столбцов
+      margin: null // Отступ между столбцами
+   }
+   $settings = extend( clone($defs), $opts )
+
+   item = $settings['item']
+   sidebar = $settings['sidebar']
+
+   margin = $settings['margin']
+   size = $settings['size']
+   length = sidebar ? size - 1 : size
+   sidebar-width = sidebar ? sidebar.width : 0
+   sidebar-index = sidebar ? sidebar.index : null
+   sidebar-selector = typeof(sidebar-index) == 'string' ? sidebar-index : '&:nth-child('+size+'n+'+sidebar-index+')'
+   width = unit(((100 - ( unit(sidebar-width) != 'px' ? unit(sidebar-width, '') : 0 ) ) - ( (unit(margin) == '%') and (size > 1) ? unit(margin, '')*(size - 1) : 0 )) / ( sidebar ? (size - 1) : size ), '%')
+
+   {item}:nth-child(n) {
+      display inline-block
+      position relative
+      width width
+      if (sidebar) {
+         {sidebar-selector} {
+            width sidebar-width
+            margin-left ((unit(margin) == '%') and (unit(sidebar-width) == 'px')) ? (-1 * sidebar-width) : 0
+            margin-right ((unit(margin) == 'px') and (sidebar-index != 1) and (unit(sidebar-width) == 'px')) ? (-1 * sidebar-width) : 0
+         }
+      }
+      if ( unit(margin) == 'px' ) {
+         marg = margin
+         for col in 1..size {
+            &:nth-child({size}n+{col}) {
+               shift = marg*(col - 1)
+               if (sidebar) {
+                  if (sidebar-index == size) {
+                     shift = marg*(col - 1)
+                  } else {
+                     if (col <= sidebar-index) {
+                        shift = marg*(col - 1)
+                     } else {
+                        shift = (marg*(col - 1) + ( unit(sidebar-width) == 'px' ? sidebar-width : 0))
+                     }
+                     // shift = (unit(sidebar-width) == 'px') ? ( (col == sidebar-index) and (sidebar-index != size) ? marg*(col - 1)+sidebar-width : marg*(col - 1) ) : marg*(col - 1)
+                  }
+               }
+               left shift
+            }
+         }
+         if (sidebar-index == 1) {
+            &:nth-child({size}n+{sidebar-index + 1}) {
+               margin-left (-1 * sidebar-width)
+            }
+         }
+      } else if ( unit(margin) == '%' ) {
+         &:nth-child(n) {
+            left 0
+            margin-right margin
+         }
+         if ( sidebar and unit(sidebar-width) == 'px' ) {
+            for col in 1..size {
+               &:nth-child({size}n+{col}) {
+                  if (sidebar) {
+                     marg = sidebar-width
+                     shift = 0
+                     if (col >= sidebar-index) {
+                        shift = (unit(margin) == 'px') ? marg*(col + 1 - sidebar-index) : marg
+                     }
+                     left shift
+                  }
+               }
+            }
+         }
+         &:nth-child({size}n+{size}) {
+            margin-right 0
+         }
+      } else {
+         // error( errors['margin'] )
+      }
+   }
+}
