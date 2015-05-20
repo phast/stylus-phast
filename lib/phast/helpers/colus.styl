@@ -74,7 +74,8 @@ colus-parent( $opts = {} ) {
 }
 colus-child( $opts = {} ) {
    $errors = {
-      unit: '\n Отступ без единиц измерения для `'+ $opts['name'] +'`. \n Могут быть % или px. \n\n'
+      unit: '\n Отступ без единиц измерения для `'+ $opts['name'] +'`. \n Могут быть % или px. \n\n',
+      sidebar: '\n Индекс сайдбара должен быть меньше или равен количеству колонок. \n\n'
    }
 
    $defs = {
@@ -90,7 +91,7 @@ colus-child( $opts = {} ) {
    size = $settings['size']
    length = sidebar ? size - 1 : size
    sidebar-width = sidebar ? sidebar.width : 0
-   sidebar-index = sidebar ? sidebar.index : null
+   sidebar-index = sidebar ? ((sidebar.index > size) ? error($errors['sidebar']) : sidebar.index) : null
    sidebar-selector = typeof(sidebar-index) == 'string' ? sidebar-index : '&:nth-child('+size+'n+'+sidebar-index+')'
    width = unit(((100 - ( unit(sidebar-width) != 'px' ? unit(sidebar-width, '') : 0 ) ) - ( (unit(margin) == '%') and (size > 1) ? unit(margin, '')*(size - 1) : 0 )) / ( sidebar ? (size - 1) : size ), '%')
 
