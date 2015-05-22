@@ -1,0 +1,62 @@
+/**
+ * Добавляет изображение из спрайта
+ * TODO - нормальное описание
+ * @param {{string|ident}} name - 'folder:icon' где `folder` указывает на папку спрайтов, а `icon` на конкретную иконку.
+ * @param {{string|list|ident}} align - Тип выравнивания блока
+ */
+spritus(name, align = null) {
+   $errors = {
+      name: '\n Имя спрайта должно быть строкой. \n\n'
+   }
+
+   if ( typeof(name) != 'string' ) {
+      error( $errors['name'] )
+   }
+
+   sprite = null
+   folder = null
+   icon = null
+
+   if ( str-indexOf(':', name) != -1 ) {
+      _name = str-split(name, ':')
+      folder = _name[0]
+      icon = _name[1]
+      sprite = $sprites[folder][icon]
+   } else {
+      folder = 'main'
+      icon = name
+      sprite = $sprites[folder][icon]
+   }
+
+   if ( !sprite ) {
+      error( '\n В папке `sprites/'+ folter + '` отсутствует файл `'+ _name +'.png`. \n\n' )
+   } else {
+      url = '../sprites/'+ folder +'.png'
+      width sprite[2]
+      height sprite[3]
+      background url( url ) sprite[0] sprite[1] no-repeat
+
+      if ( align ) {
+         horizontal = align[0]
+         vertical = align[1] ? align[1] : align[0]
+         position absolute if !@position
+         if horizontal is center {
+            margin-left round(@width / -2)
+            left 50%
+         } else if (horizontal is left) {
+            left 0
+         } else if (horizontal is right) {
+            right 0
+         }
+
+         if (vertical is center) {
+            margin-top round(@height / -2)
+            top 50%
+         } else if (vertical is top) {
+            top 0
+         } else if (vertical is bottom) {
+            bottom 0
+         }
+      }
+   }
+}
