@@ -14,7 +14,7 @@ spritus(name, align = null) {
    }
 
    sprite = null
-   folder = null
+   folder = $settings-sprites-default-folder
    icon = null
 
    if ( str-indexOf(':', name) != -1 ) {
@@ -23,13 +23,12 @@ spritus(name, align = null) {
       icon = _name[1]
       sprite = $sprites[folder][icon]
    } else {
-      folder = 'main'
       icon = name
       sprite = $sprites[folder][icon]
    }
 
    if ( !sprite ) {
-      error( '\n В папке `sprites/'+ folter + '` отсутствует файл `'+ _name +'.png`. \n\n' )
+      error( '\n В папке `sprites/'+ folder + '` отсутствует файл `'+ _name +'.png`. \n\n' )
    } else {
       url = '../sprites/'+ folder +'.png'
       width sprite[2]
