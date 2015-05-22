@@ -1,5 +1,14 @@
 $colus = {}
-colus( $opts = {} ) {
+colus( size = 1, margin = 0, sidebar = null, item = '&-item', name = selector(), extend = null ) {
+   $opts = {
+      name: name,
+      extend: extend,
+      size: size,
+      margin: margin,
+      item: item,
+      sidebar: sidebar
+   }
+
    // Работа с ошибками
    $errors = {
       exists: '\n Колонки с именем `'+ $opts['name'] +'` уже существуют. \n Используйте `extend`, либо выберите другое имя. \n\n',
@@ -21,19 +30,21 @@ colus( $opts = {} ) {
    }
 
    // Если наследуем колонки, то проверяем их на наличие.
-   if ( ('extend' in $opts) and ($opts['extend'] in $colus) ) {
-      // Есть -- берём их настройки.
-      $defs = $colus[ $opts['extend'] ]
-   } else if ( ('extend' in $opts) and (not $opts['extend'] in $colus) ) {
-      // Нету -- Выдаём ошибку
-      error( $errors['extend'] )
+   if ( $opts['extend'] ) {
+      if ( $opts['extend'] in $colus ) {
+         // Есть -- берём их настройки.
+         $defs = $colus[ $opts['extend'] ]
+      } else if ( not $opts['extend'] in $colus ) {
+         // Нету -- Выдаём ошибку
+         error( $errors['extend'] )
+      }
    }
 
    // Дополняем начальные значения теми что указаны в вызове
-   $settings = extend( clone($defs), $opts )
+   $settings = extend( clone($defs), clone($opts) )
 
    // Для одной колонки не может быть сайдбара
-   if ( size == 1 && $settings['sidebar'] ) {
+   if ( $settings['size'] == 1 && $settings['sidebar'] ) {
       $settings['sidebar'] = null
    }
 
@@ -101,6 +112,7 @@ colus-child( $opts = {} ) {
    width = unit(((100 - ( unit(sidebar-width) != 'px' ? unit(sidebar-width, '') : 0 ) ) - ( (unit(margin) == '%') and (size > 1) ? unit(margin, '')*(size - 1) : 0 )) / ( sidebar ? (size - 1) : size ), '%')
 
    {item}:nth-child(n) {
+      vertical-align top
       display inline-block
       position relative
       width width
