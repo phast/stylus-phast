@@ -72,7 +72,7 @@ colus-parent( $opts = {} ) {
    $settings = extend( clone($defs), $opts)
 
    sidebar = $settings['sidebar']
-   sidebar-width = sidebar and unit(sidebar.width) == 'px' ? sidebar.width : 0
+   sidebar-width = sidebar && unit(sidebar.width) == 'px' ? sidebar.width : 0
    margin = $settings['margin']
    size = $settings['size']
 
@@ -109,7 +109,7 @@ colus-child( $opts = {} ) {
    sidebar-width = sidebar ? sidebar.width : 0
    sidebar-index = sidebar ? ((sidebar.index > size) ? error($errors['sidebar']) : sidebar.index) : null
    sidebar-selector = typeof(sidebar-index) == 'string' ? sidebar-index : '&:nth-child('+size+'n+'+sidebar-index+')'
-   width = unit(((100 - ( unit(sidebar-width) != 'px' ? unit(sidebar-width, '') : 0 ) ) - ( (unit(margin) == '%') and (size > 1) ? unit(margin, '')*(size - 1) : 0 )) / ( sidebar ? (size - 1) : size ), '%')
+   width = unit(((100 - ( unit(sidebar-width) != 'px' ? unit(sidebar-width, '') : 0 ) ) - ( (unit(margin) == '%') && (size > 1) ? unit(margin, '')*(size - 1) : 0 )) / ( sidebar ? (size - 1) : size ), '%')
 
    {item}:nth-child(n) {
       vertical-align top
@@ -119,8 +119,8 @@ colus-child( $opts = {} ) {
       if (sidebar) {
          {sidebar-selector} {
             width sidebar-width
-            margin-left ((unit(margin) == '%') and (unit(sidebar-width) == 'px')) ? (-1 * sidebar-width) : 0
-            margin-right ((unit(margin) == 'px') and (sidebar-index != 1) and (unit(sidebar-width) == 'px')) ? (-1 * sidebar-width) : 0
+            margin-left ((unit(margin) == '%') && (unit(sidebar-width) == 'px')) ? (-1 * sidebar-width) : 0
+            margin-right ((unit(margin) == 'px') && (sidebar-index != 1) && (unit(sidebar-width) == 'px')) ? (-1 * sidebar-width) : 0
          }
       }
       if ( unit(margin) == 'px' ) {
@@ -137,13 +137,13 @@ colus-child( $opts = {} ) {
                      } else {
                         shift = (marg*(col - 1) + ( unit(sidebar-width) == 'px' ? sidebar-width : 0))
                      }
-                     // shift = (unit(sidebar-width) == 'px') ? ( (col == sidebar-index) and (sidebar-index != size) ? marg*(col - 1)+sidebar-width : marg*(col - 1) ) : marg*(col - 1)
+                     // shift = (unit(sidebar-width) == 'px') ? ( (col == sidebar-index) && (sidebar-index != size) ? marg*(col - 1)+sidebar-width : marg*(col - 1) ) : marg*(col - 1)
                   }
                }
                left shift
             }
          }
-         if (sidebar-index == 1) {
+         if (sidebar-index == 1 && unit(sidebar-width) == 'px') {
             &:nth-child({size}n+{sidebar-index + 1}) {
                margin-left (-1 * sidebar-width)
             }
@@ -153,7 +153,7 @@ colus-child( $opts = {} ) {
             left 0
             margin-right margin
          }
-         if ( sidebar and unit(sidebar-width) == 'px' ) {
+         if ( sidebar && unit(sidebar-width) == 'px' ) {
             for col in 1..size {
                &:nth-child({size}n+{col}) {
                   if (sidebar) {
