@@ -1,12 +1,25 @@
 $colus = {}
-colus( size = 1, margin = 0, sidebar = null, item = '&-item', name = selector(), extend = null ) {
-   $opts = {
-      name: name,
-      extend: extend,
-      size: size,
-      margin: margin,
-      item: item,
-      sidebar: sidebar
+colus( size = null, margin = null, sidebar = null, item = null, name = null, extend = null ) {
+   $opts = {}
+   if (name) {
+      $opts['name'] = name
+   } else if (!extend) {
+      $opts['name'] = selector()
+   }
+   if (extend) {
+      $opts['extend'] = extend
+   }
+   if (size) {
+      $opts['size'] = size
+   }
+   if (margin) {
+      $opts['margin'] = margin
+   }
+   if (item) {
+      $opts['item'] = item
+   }
+   if (sidebar) {
+      $opts['sidebar'] = sidebar
    }
 
    // Работа с ошибками
