@@ -5,6 +5,7 @@
  * @param {{string|list|ident}} align - Тип выравнивания блока
  */
 spritus(name, align = null) {
+
    $errors = {
       name: '\n Имя спрайта должно быть строкой. \n\n'
    }
@@ -30,17 +31,23 @@ spritus(name, align = null) {
    if ( !sprite ) {
       error( '\n В папке `sprites/'+ folder + '` отсутствует файл `'+ icon +'.png`. \n\n' )
    } else {
+
       url = '../sprites/'+ folder +'.png'
-      width sprite[2]
-      height sprite[3]
-      background url( url ) sprite[0] sprite[1] no-repeat
+      width = convert(sprite.px.width)
+      height = convert(sprite.px.height)
+      offset_x = convert(sprite.px.offset_x)
+      offset_y = convert(sprite.px.offset_y)
+
+      width width
+      height height
+      background url( url ) offset_x offset_y no-repeat
 
       if ( align ) {
          horizontal = align[0]
          vertical = align[1] ? align[1] : align[0]
          position absolute if !@position
          if horizontal is center {
-            margin-left round(@width / -2)
+            margin-left round(width / -2)
             left 50%
          } else if (horizontal is left) {
             left 0
@@ -49,7 +56,7 @@ spritus(name, align = null) {
          }
 
          if (vertical is center) {
-            margin-top round(@height / -2)
+            margin-top round(height / -2)
             top 50%
          } else if (vertical is top) {
             top 0
