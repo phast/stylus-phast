@@ -1,0 +1,27 @@
+do() {
+   $type = arguments[0]
+   _type = $type
+   $size = arguments[1]
+   _size = $size
+
+   if ( typeof(_type) == 'unit' && typeof(_size) != 'unit' ) {
+      $size = _type
+      $type = _size
+   }
+
+   if ( $type == 'min' ) {
+      $type = 'min-width'
+   } else if ( $type == 'max' || !$type ) {
+      $type = 'max-width'
+   }
+
+   if ( typeof(_type) == 'unit' && typeof(_size) == 'unit' ) {
+      @media (min-width: unit(_type, 'px')) and (max-width: unit(_size, 'px')) {
+         {block}
+      }
+   } else {
+      @media ({$type}: unit($size, 'px')) {
+         {block}
+      }
+   }
+}
