@@ -14,6 +14,8 @@ body {
             top 0
             right 0
             left 0
+            min-width $layout-min-width
+            box-sizing border-box
             & + main {
                margin-top $header-margin ? $header-height + $header-margin : $header-height
             }
@@ -31,7 +33,8 @@ body {
       height $footer-height if $footer-height
    }
    & + footer {
-      min-width $layout-min-width ? $layout-min-width : ($block-width + $block-padding * 2)
+      min-width $layout-min-width
+      box-sizing border-box
       height $footer-height if $footer-height
       margin-top -1*$footer-height if $footer-height
    }
